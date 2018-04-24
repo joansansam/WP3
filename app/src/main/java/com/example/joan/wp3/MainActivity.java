@@ -6,11 +6,25 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
+
+import org.json.JSONObject;
+
+import static com.example.joan.wp3.ApiHelper.ACCUWEATHER;
+import static com.example.joan.wp3.ApiHelper.OPENWEATHERMAP;
+
+/**
+ * Created by joan.sansa.melsion on 18/04/2018.
+ */
 
 public class MainActivity extends AppCompatActivity {
+
     private String selectedService;
-    private Button getGpsButton;
+    private Button getGpsButton,callServiceButton;
+    private EditText latInput, lonInput;
+    private TextView responseTV;
 
     //--------------------------------------------------------------------------
     // LIFE CYCLE
@@ -21,16 +35,38 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        latInput = findViewById(R.id.lat_input);
+        lonInput = findViewById(R.id.lon_input);
+        responseTV = findViewById(R.id.response_tv);
+
         getGpsButton = findViewById(R.id.get_gps_btn);
         getGpsButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                //
+                //ToDo: Obtain GPS position
+                latInput.setText("41.493639");
+                lonInput.setText("2.076364");
+
+            }
+        });
+
+        callServiceButton = findViewById(R.id.call_service_btn);
+        callServiceButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                double lat = Double.valueOf(latInput.getText().toString());
+                double lon = Double.valueOf(lonInput.getText().toString());
+
+                ApiHelper apiHelper = new ApiHelper();
+                JSONObject response = apiHelper.selectService(selectedService, lat, lon);
+                if (response != null){
+                    responseTV.setText(response.toString());
+                }
             }
         });
 
         Spinner servicesSpinner = findViewById(R.id.services_spinner);
-        final String[] services= new String[]{"Accuweather","OpenWeatherMap"};
+        final String[] services= new String[]{OPENWEATHERMAP,ACCUWEATHER};
         ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, services);
         adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         servicesSpinner.setAdapter(adaptador);
@@ -45,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
                         selectedService = (String)parent.getItemAtPosition(0);
                     }
                 });
+
 
     }
 }
