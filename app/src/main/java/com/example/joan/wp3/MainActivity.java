@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
 
         latInput = findViewById(R.id.lat_input);
         lonInput = findViewById(R.id.lon_input);
-        responseTV = findViewById(R.id.response_tv);
 
         getGpsButton = findViewById(R.id.get_gps_btn);
         getGpsButton.setOnClickListener(new View.OnClickListener(){
@@ -50,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        final MainActivity activity = MainActivity.this;
         callServiceButton = findViewById(R.id.call_service_btn);
         callServiceButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -58,15 +58,12 @@ public class MainActivity extends AppCompatActivity {
                 double lon = Double.valueOf(lonInput.getText().toString());
 
                 ApiHelper apiHelper = new ApiHelper();
-                JSONObject response = apiHelper.selectService(selectedService, lat, lon);
-                if (response != null){
-                    responseTV.setText(response.toString());
-                }
+                JSONObject response = apiHelper.selectService(activity,selectedService, lat, lon);
             }
         });
 
         Spinner servicesSpinner = findViewById(R.id.services_spinner);
-        final String[] services= new String[]{OPENWEATHERMAP,ACCUWEATHER};
+        final String[] services= new String[]{ACCUWEATHER, OPENWEATHERMAP};
         ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, services);
         adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         servicesSpinner.setAdapter(adaptador);
