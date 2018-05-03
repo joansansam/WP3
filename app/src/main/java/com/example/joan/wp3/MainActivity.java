@@ -42,10 +42,12 @@ public class MainActivity extends AppCompatActivity {
         getGpsButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                //ToDo: Obtain GPS position
-                latInput.setText("41.493639");
-                lonInput.setText("2.076364");
+                //Obtain GPS position
+                //For test
+                /*latInput.setText("41.493639");
+                lonInput.setText("2.076364");*/
 
+                new LocationHelper(MainActivity.this);
             }
         });
 
