@@ -24,6 +24,7 @@ public class ApiHelper {
 
     final static String ACCUWEATHER="Accuweather";
     final static String OPENWEATHERMAP="OpenWeatherMap";
+    final static String DARKSKY="DarkSky";
 
     private JSONObject serviceResponseJson=null;
     private Activity activity;
@@ -38,6 +39,9 @@ public class ApiHelper {
 
         } else if(service.equals(OPENWEATHERMAP)){
             urlString = "http://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&type=accurate&appid=679b8bcfee89ed57c2bd5ebed2389690";
+            serviceCall();
+        } else if(service.equals(DARKSKY)){
+            urlString ="https://api.darksky.net/forecast/4f237579222e7fd80fa327b8c57c532d/"+lat+","+lon;
             serviceCall();
         }
 
@@ -107,12 +111,14 @@ public class ApiHelper {
         try {
             if(urlString.contains("openweathermap")) {
                 pressureValue = serviceResponseJson.getJSONObject("main").getString("pressure");
-                Toast.makeText(activity.getApplicationContext(), "Pressure="+pressureValue, Toast.LENGTH_SHORT).show();
             }
             else if(urlString.contains("accuweather")){
                 pressureValue = serviceResponseJson.getJSONObject("Pressure").getJSONObject("Metric").getString("Value");
-                Toast.makeText(activity.getApplicationContext(), "Pressure="+pressureValue, Toast.LENGTH_SHORT).show();
             }
+            else if (urlString.contains("darksky")){
+                pressureValue = serviceResponseJson.getJSONObject("currently").getString("pressure");
+            }
+            Toast.makeText(activity.getApplicationContext(), "Pressure="+pressureValue, Toast.LENGTH_SHORT).show();
         } catch (JSONException e) {
             e.printStackTrace();
             Log.e("ApiHelper",e.getMessage());

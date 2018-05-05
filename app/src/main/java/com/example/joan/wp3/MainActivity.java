@@ -13,6 +13,7 @@ import android.widget.TextView;
 import org.json.JSONObject;
 
 import static com.example.joan.wp3.ApiHelper.ACCUWEATHER;
+import static com.example.joan.wp3.ApiHelper.DARKSKY;
 import static com.example.joan.wp3.ApiHelper.OPENWEATHERMAP;
 
 /**
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Spinner servicesSpinner = findViewById(R.id.services_spinner);
-        final String[] services= new String[]{ACCUWEATHER, OPENWEATHERMAP};
+        final String[] services= new String[]{ACCUWEATHER, OPENWEATHERMAP, DARKSKY};
         ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, services);
         adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         servicesSpinner.setAdapter(adaptador);
