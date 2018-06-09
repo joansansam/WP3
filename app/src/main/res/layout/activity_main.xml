@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText android:id="@+id/lat_input"
+    <EditText
+        android:id="@+id/lat_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -16,7 +17,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText android:id="@+id/lon_input"
+    <EditText
+        android:id="@+id/lon_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
@@ -27,7 +29,8 @@
         app:layout_constraintLeft_toRightOf="@+id/lat_input"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button android:id="@+id/call_service_btn"
+    <Button
+        android:id="@+id/call_service_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -37,32 +40,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/get_gps_btn" />
 
-    <TextView android:id="@+id/url_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="URL"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/services_spinner" />
-
-    <ScrollView  android:id="@+id/scrollView"
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/url_tv">
-
-        <TextView android:id="@+id/response_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="start|top"
-            android:text="RESPONSE" />
+        tools:layout_editor_absoluteY="120dp">
 
     </ScrollView>
 
-    <Spinner android:id="@+id/services_spinner"
+    <Spinner
+        android:id="@+id/services_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -70,7 +59,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lat_input" />
 
-    <Button android:id="@+id/get_gps_btn"
+    <Button
+        android:id="@+id/get_gps_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -79,5 +69,27 @@
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ToggleButton
+        android:id="@+id/repetitive_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:textAllCaps="false"
+        android:textOff="Start repetitive task"
+        android:textOn="Stop repetitive task"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/call_service_btn" />
+
+    <TextView
+        android:id="@+id/response_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="start|top"
+        android:text="RESPONSE"
+        app:layout_constraintTop_toBottomOf="@+id/services_spinner"
+        tools:layout_editor_absoluteX="8dp" />
 
 </android.support.constraint.ConstraintLayout>

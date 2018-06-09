@@ -40,7 +40,6 @@ public class LocationHelper {
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},1);
         }
 
-        //ToDo: maybe show dialog if GPS not enabled.
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(activity);
         createLocationRequest();
