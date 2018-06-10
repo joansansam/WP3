@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         latInput = findViewById(R.id.lat_input);
         lonInput = findViewById(R.id.lon_input);
+        responseTV = findViewById(R.id.response_tv);
 
         getGpsButton = findViewById(R.id.get_gps_btn);
         getGpsButton.setOnClickListener(new View.OnClickListener(){
@@ -101,8 +102,8 @@ public class MainActivity extends AppCompatActivity {
         repetitiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int intervalInSeconds = 10;
-                //int intervalInSeconds = 10*60;
+                //int intervalInSeconds = 10;
+                int intervalInSeconds = 10*60;
 
                 boolean buttonIsChecked = repetitiveButton.isChecked();
 
@@ -162,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                         editor.putInt("callNumber",callNumber).commit();
                         apiHelper.selectService(activity,ACCUWEATHER, lat, lon);
                     }
-                    apiHelper.selectService(activity,DARKSKY, lat, lon);
+                    //apiHelper.selectService(activity,DARKSKY, lat, lon);
                 }});
         }
 

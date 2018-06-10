@@ -1,8 +1,6 @@
 package com.example.joan.wp3;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -16,6 +14,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Locale;
 
 /**
  * Created by joan.sansa.melsion on 24/04/2018.
@@ -55,32 +54,6 @@ public class ApiHelper {
         new AsyncWork().execute();
     }
 
-    private void updateUI(JSONObject serviceResponseJson){
-        TextView responseTV = activity.findViewById(R.id.response_tv);
-
-        String timestamp = DateFormat.format("dd/MM/yyyy-HH:mm:ss", new java.util.Date()).toString();
-
-        String pressureValue = "0.0";
-        try {
-            if(urlString.contains("openweathermap")) {
-                pressureValue = serviceResponseJson.getJSONObject("main").getString("pressure");
-            }
-            else if(urlString.contains("accuweather")){
-                pressureValue = serviceResponseJson.getJSONObject("Pressure").getJSONObject("Metric").getString("Value");
-                responseTV.append("\n"+timestamp+"Accuweather: "+pressureValue);
-            }
-            else if (urlString.contains("darksky")){
-                pressureValue = serviceResponseJson.getJSONObject("currently").getString("pressure");
-                responseTV.append("\n"+timestamp+" Darksky: "+pressureValue);
-            }
-            Toast.makeText(activity.getApplicationContext(), "Pressure="+pressureValue, Toast.LENGTH_SHORT).show();
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Log.e("ApiHelper",e.getMessage());
-        }
-    }
-
     private class AsyncWork extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... params) {
@@ -115,18 +88,50 @@ public class ApiHelper {
 
         @Override
         protected void onPostExecute(Void result) {
-            if(urlString.contains("accuweather") && urlString.contains("locations")){
-                try {
-                    String locationKey = serviceResponseJson.getString("Key");
-                    urlString="http://dataservice.accuweather.com/currentconditions/v1/"+locationKey+"?apikey=TQcwTT9Mw9VMsXPuIKBtgJCjhLZDRh8e&details=true";
-                    serviceCall();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Log.e("ApiHelper", e.getMessage());
+            if(serviceResponseJson != null) {
+                if (urlString.contains("accuweather") && urlString.contains("locations")) {
+                    try {
+                        String locationKey = serviceResponseJson.getString("Key");
+                        urlString = "http://dataservice.accuweather.com/currentconditions/v1/" + locationKey + "?apikey=TQcwTT9Mw9VMsXPuIKBtgJCjhLZDRh8e&details=true";
+                        serviceCall();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Log.e("ApiHelper", e.getMessage());
+                    }
+                } else {
+                    updateUI(serviceResponseJson);
                 }
-            } else {
-                updateUI(serviceResponseJson);
             }
+        }
+    }
+
+    private void updateUI(JSONObject serviceResponseJson){
+        TextView responseTV = activity.findViewById(R.id.response_tv);
+
+        String timestamp = DateFormat.format("dd/MM/yyyy-HH:mm:ss", new java.util.Date()).toString();
+
+        String pressureValue = "0.0";
+        try {
+            if(urlString.contains("openweathermap")) {
+                pressureValue = serviceResponseJson.getJSONObject("main").getString("pressure");
+            }
+            else if(urlString.contains("accuweather")){
+                pressureValue = serviceResponseJson.getJSONObject("Pressure").getJSONObject("Metric").getString("Value");
+                String temperature = serviceResponseJson.getJSONObject("Temperature").getJSONObject("Metric").getString("Value");
+                responseTV.append("\n"+timestamp+" Accuweather: "+pressureValue+" - "+temperature);
+            }
+            else if (urlString.contains("darksky")){
+                pressureValue = serviceResponseJson.getJSONObject("currently").getString("pressure");
+                String temperatureString = serviceResponseJson.getJSONObject("currently").getString("temperature");
+                double convertedTemp= 5*(Double.valueOf(temperatureString)-32)/9;
+                String temperature = String.format(Locale.ENGLISH, "%.2f", convertedTemp);
+                responseTV.append("\n"+timestamp+" Darksky: "+pressureValue+" - "+temperature);
+            }
+            //Toast.makeText(activity.getApplicationContext(), "Pressure="+pressureValue, Toast.LENGTH_SHORT).show();
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Log.e("ApiHelper",e.getMessage());
         }
     }
 }

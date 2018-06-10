@@ -40,16 +40,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/get_gps_btn" />
 
-    <ScrollView
-        android:id="@+id/scrollView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        tools:layout_editor_absoluteY="120dp">
-
-    </ScrollView>
-
     <Spinner
         android:id="@+id/services_spinner"
         android:layout_width="wrap_content"
@@ -73,23 +63,30 @@
     <ToggleButton
         android:id="@+id/repetitive_btn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:textAllCaps="false"
         android:textOff="Start repetitive task"
         android:textOn="Stop repetitive task"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/call_service_btn" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/services_spinner" />
 
-    <TextView
-        android:id="@+id/response_tv"
-        android:layout_width="wrap_content"
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:gravity="start|top"
-        android:text="RESPONSE"
-        app:layout_constraintTop_toBottomOf="@+id/services_spinner"
-        tools:layout_editor_absoluteX="8dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/repetitive_btn">
+
+        <TextView
+            android:id="@+id/response_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:gravity="start|top"
+            android:text="RESPONSE"/>
+    </ScrollView>
+
+
 
 </android.support.constraint.ConstraintLayout>
