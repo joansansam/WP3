@@ -161,9 +161,9 @@ public class MainActivity extends AppCompatActivity {
                         callNumber++;
                         SharedPreferences.Editor editor = prefs.edit();
                         editor.putInt("callNumber",callNumber).commit();
-                        apiHelper.selectService(activity,ACCUWEATHER, lat, lon);
+                        //apiHelper.selectService(activity,ACCUWEATHER, lat, lon);
                     }
-                    //apiHelper.selectService(activity,DARKSKY, lat, lon);
+                    apiHelper.selectService(activity,DARKSKY, lat, lon);
                 }});
         }
 

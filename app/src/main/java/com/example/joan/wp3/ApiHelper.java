@@ -1,6 +1,8 @@
 package com.example.joan.wp3;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -128,6 +130,12 @@ public class ApiHelper {
                 responseTV.append("\n"+timestamp+" Darksky: "+pressureValue+" - "+temperature);
             }
             //Toast.makeText(activity.getApplicationContext(), "Pressure="+pressureValue, Toast.LENGTH_SHORT).show();
+
+            //Save logs
+            String logs = responseTV.getText().toString();
+            SharedPreferences prefs = activity.getApplicationContext().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("logs",logs).commit();
 
         } catch (JSONException e) {
             e.printStackTrace();
