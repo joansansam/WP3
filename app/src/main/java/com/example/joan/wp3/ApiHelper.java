@@ -120,14 +120,14 @@ public class ApiHelper {
             else if(urlString.contains("accuweather")){
                 pressureValue = serviceResponseJson.getJSONObject("Pressure").getJSONObject("Metric").getString("Value");
                 String temperature = serviceResponseJson.getJSONObject("Temperature").getJSONObject("Metric").getString("Value");
-                responseTV.append("\n"+timestamp+" Accuweather: "+pressureValue+" - "+temperature);
+                responseTV.append("\n"+timestamp+" Accuweather: "+pressureValue.replace(".",",")+" - "+temperature.replace(".",","));
             }
             else if (urlString.contains("darksky")){
                 pressureValue = serviceResponseJson.getJSONObject("currently").getString("pressure");
                 String temperatureString = serviceResponseJson.getJSONObject("currently").getString("temperature");
                 double convertedTemp= 5*(Double.valueOf(temperatureString)-32)/9;
                 String temperature = String.format(Locale.ENGLISH, "%.2f", convertedTemp);
-                responseTV.append("\n"+timestamp+" Darksky: "+pressureValue+" - "+temperature);
+                responseTV.append("\n"+timestamp+" Darksky: "+pressureValue.replace(".",",")+" - "+temperature.replace(".",","));
             }
             //Toast.makeText(activity.getApplicationContext(), "Pressure="+pressureValue, Toast.LENGTH_SHORT).show();
 
